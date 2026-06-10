@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description"
+    content="FRENZO — Curated fashion lookbook. Shop timeless, minimal outfits with direct affiliate links. Timeless. Simple. Effortless." />
+  <meta name="theme-color" content="#F4EDE4" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FRENZO — Curated Fashion Lookbook" />
+  <meta property="og:description"
+    content="Shop timeless, minimal outfits curated by FRENZO. Timeless. Simple. Effortless." />
+  <meta property="og:type" content="website" />
+
+  <title>FRENZO — Curated Fashion Lookbook</title>
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80' font-family='Georgia'>F</text></svg>" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <h1 class="header__logo" id="siteLogo">F R E N Z O</h1>
+    <p class="header__motto">Timeless · Simple · Effortless</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════ -->
+  <main class="main-content" role="main">
+
+    <!-- Season Label -->
+    <section class="season-label" aria-label="Collection info">
+      <span class="season-label__tag">New Collection</span>
+      <h2 class="season-label__title">The Lookbook</h2>
+      <p class="season-label__subtitle">Spring / Summer &amp; Autumn / Winter 2025</p>
+      
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" id="filterTabs" role="tablist" aria-label="Filter looks by season">
+        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true" aria-controls="lookbookGrid">All</button>
+        <button class="filter-tab" data-filter="SS25" role="tab" aria-selected="false" aria-controls="lookbookGrid">Spring / Summer</button>
+        <button class="filter-tab" data-filter="AW25" role="tab" aria-selected="false" aria-controls="lookbookGrid">Autumn / Winter</button>
+        <button class="filter-tab filter-tab--favorites" data-filter="favorites" role="tab" aria-selected="false" aria-controls="lookbookGrid">
+          <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          Saved
+        </button>
+      </div>
+    </section>
+
+    <!-- Lookbook Grid -->
+    <section class="lookbook-grid" id="lookbookGrid" role="region" aria-label="Outfit lookbook grid">
+      <!-- Cards rendered dynamically by grid.js -->
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       DRAWER OVERLAY
+       ═══════════════════════════════════════════ -->
+  <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       DRAWER PANEL (Bottom Sheet)
+       ═══════════════════════════════════════════ -->
+  <aside class="drawer-panel" id="drawerPanel" role="dialog" aria-modal="true" aria-label="Shop this look"
+    aria-hidden="true">
+    <!-- Drag Handle -->
+    <div class="drawer__handle" id="drawerHandle" aria-hidden="true">
+      <div class="drawer__handle-bar"></div>
+    </div>
+
+    <!-- Drawer Header -->
+    <div class="drawer__header">
+      <div class="drawer__header-content">
+        <div class="drawer__look-season" id="drawerLookSeason">SS25</div>
+        <h3 class="drawer__look-title" id="drawerLookTitle">THE LOOK</h3>
+      </div>
+      <button class="drawer__close" id="drawerClose" aria-label="Close drawer">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 4l10 10M14 4L4 14" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div class="drawer__divider" aria-hidden="true"></div>
+
+    <!-- Drawer Body -->
+    <div class="drawer__body" id="drawerBody">
+      <ul class="product-list" id="drawerProductList" role="list">
+        <!-- Products rendered dynamically by drawer.js -->
+      </ul>
+      <a class="drawer__shop-all" id="drawerShopAll" href="#" target="_blank" rel="noopener noreferrer">
+        Shop the Full Look
+      </a>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <p class="footer__disclaimer">
+      Affiliate Disclosure: FRENZO is a participant in affiliate advertising programs,
+      including the Amazon Services LLC Associates Program, designed to provide a means
+      for sites to earn advertising fees by advertising and linking to partner retailers.
+      Prices and availability are subject to change. When you click on links and make
+      purchases, we may receive a small commission at no additional cost to you.
+    </p>
+    <p class="footer__brand">F R E N Z O</p>
+    <p class="footer__copyright">&copy; 2025 Frenzo. All rights reserved.</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS (order matters)
+       ═══════════════════════════════════════════ -->
+  <script src="js/data.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/drawer.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>

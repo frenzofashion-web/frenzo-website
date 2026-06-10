@@ -1,0 +1,228 @@
+/* ============================================
+   FRENZO — Animations & Transitions
+   ============================================ */
+
+/* ── Page Load: Header Fade In ── */
+@keyframes headerReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Page Load: Staggered Card Reveal ── */
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Drawer: Slide Up ── */
+@keyframes drawerSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ── Drawer: Slide Down ── */
+@keyframes drawerSlideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* ── Drawer: Slide Left (Desktop Side Sheet) ── */
+@keyframes drawerSlideLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ── Drawer: Slide Right (Desktop Side Sheet) ── */
+@keyframes drawerSlideRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ── Overlay: Fade In ── */
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Overlay: Fade Out ── */
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ── Product Item: Staggered Reveal ── */
+@keyframes productReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Subtle Pulse for Loading ── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ── Footer Fade ── */
+@keyframes footerReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Card Hover Title ── */
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Tap Feedback ── */
+@keyframes tapPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ── Apply Animations ── */
+
+/* Header */
+.site-header {
+  animation: headerReveal 0.8s var(--ease-out-expo) forwards;
+}
+
+/* Grid cards — staggered via inline --delay */
+.look-card {
+  opacity: 0;
+  animation: cardReveal 0.7s var(--ease-out-expo) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* Drawer overlay */
+.drawer-overlay {
+  animation: overlayFadeIn var(--duration-drawer) var(--ease-out-expo) forwards;
+}
+
+.drawer-overlay.closing {
+  animation: overlayFadeOut var(--duration-normal) var(--ease-in-out) forwards;
+}
+
+/* Drawer panel */
+.drawer-panel {
+  animation: drawerSlideUp var(--duration-drawer) var(--ease-out-spring) forwards;
+}
+
+.drawer-panel.closing {
+  animation: drawerSlideDown var(--duration-normal) var(--ease-in-out) forwards;
+}
+
+/* Product items — staggered */
+.product-item {
+  opacity: 0;
+  animation: productReveal 0.5s var(--ease-out-expo) forwards;
+  animation-delay: var(--product-delay, 0ms);
+}
+
+/* Footer */
+.site-footer {
+  animation: footerReveal 1s var(--ease-out-expo) 0.6s forwards;
+  opacity: 0;
+}
+
+/* ── Interaction States ── */
+
+/* Card hover overlay */
+.look-card__overlay {
+  transition: opacity var(--duration-normal) var(--ease-in-out);
+}
+
+.look-card__title {
+  transition: opacity var(--duration-normal) var(--ease-in-out),
+              transform var(--duration-normal) var(--ease-out-expo);
+}
+
+/* Product tap */
+.product-item:active {
+  animation: tapPulse 0.2s ease forwards;
+}
+
+/* Desktop side sheet slide animations override */
+@media (min-width: 768px) {
+  .drawer-panel {
+    animation: drawerSlideLeft var(--duration-drawer) var(--ease-out-spring) forwards;
+  }
+  
+  .drawer-panel.closing {
+    animation: drawerSlideRight var(--duration-normal) var(--ease-in-out) forwards;
+  }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

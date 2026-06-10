@@ -1,0 +1,522 @@
+/* ============================================
+   FRENZO — Components: Cards, Drawer, Overlay
+   ============================================ */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LOOK CARDS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.look-card {
+  position: relative;
+  aspect-ratio: var(--card-ratio);
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.look-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.look-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-lg);
+  background: linear-gradient(
+    0deg,
+    rgba(74, 50, 37, 0.5) 0%,
+    rgba(74, 50, 37, 0.1) 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.look-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-light);
+  letter-spacing: var(--ls-wider);
+  color: var(--text-inverse);
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.look-card__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-wider);
+  color: rgba(255, 253, 249, 0.7);
+  text-transform: uppercase;
+  margin-top: var(--space-2xs);
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* Card Hover */
+@media (hover: hover) {
+  .look-card:hover .look-card__image {
+    transform: scale(1.03);
+  }
+
+  .look-card:hover .look-card__overlay {
+    opacity: 1;
+  }
+
+  .look-card:hover .look-card__title {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s var(--ease-out-expo) 0.05s,
+                transform 0.4s var(--ease-out-expo) 0.05s;
+  }
+
+  .look-card:hover .look-card__subtitle {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s var(--ease-out-expo) 0.12s,
+                transform 0.4s var(--ease-out-expo) 0.12s;
+  }
+}
+
+/* Card Active/Tap */
+.look-card:active .look-card__image {
+  transform: scale(1.01);
+  transition-duration: 0.15s;
+}
+
+/* Look Card Favorite (Heart) Button */
+.look-card__favorite {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 253, 249, 0.9);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(74, 50, 37, 0.12);
+  z-index: 10;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-bounce),
+              background-color var(--duration-fast) ease,
+              color var(--duration-fast) ease,
+              opacity var(--duration-normal) ease;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.look-card__favorite svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8px;
+  transition: fill var(--duration-fast) ease,
+              stroke var(--duration-fast) ease,
+              transform var(--duration-fast) var(--ease-bounce);
+}
+
+.look-card__favorite:hover {
+  transform: scale(1.1);
+  background-color: var(--surface-white);
+}
+
+.look-card__favorite:active {
+  transform: scale(0.95);
+}
+
+.look-card__favorite.is-favorite {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.look-card__favorite.is-favorite svg {
+  fill: #B04A36; /* Premium terracotta-red color */
+  stroke: #B04A36;
+}
+
+/* Hover effects for card heart button */
+@media (hover: hover) {
+  .look-card:hover .look-card__favorite {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Always show heart button on touch devices / mobile, and when it is active */
+@media (hover: none) {
+  .look-card__favorite {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DRAWER OVERLAY
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background-color: var(--bg-overlay);
+  display: none;
+}
+
+.drawer-overlay.active {
+  display: block;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DRAWER PANEL (Bottom Sheet)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.drawer-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-drawer);
+  max-height: var(--drawer-max-height);
+  background-color: var(--bg-drawer);
+  border-radius: 16px 16px 0 0;
+  box-shadow: var(--shadow-drawer);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.drawer-panel.active {
+  display: flex;
+}
+
+/* Drawer Handle */
+.drawer__handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) 0 var(--space-2xs);
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.drawer__handle:active {
+  cursor: grabbing;
+}
+
+.drawer__handle-bar {
+  width: var(--drawer-handle-width);
+  height: var(--drawer-handle-height);
+  background-color: var(--border-medium);
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-fast) ease;
+}
+
+.drawer__handle:hover .drawer__handle-bar {
+  width: calc(var(--drawer-handle-width) + 8px);
+}
+
+/* Drawer Header */
+.drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-lg) var(--space-md);
+  flex-shrink: 0;
+}
+
+.drawer__header-content {
+  flex: 1;
+}
+
+.drawer__look-season {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2xs);
+}
+
+.drawer__look-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-light);
+  letter-spacing: var(--ls-wide);
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.drawer__close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  transition: color var(--duration-fast) ease,
+              transform var(--duration-fast) ease;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
+.drawer__close:hover {
+  color: var(--text-primary);
+}
+
+.drawer__close:active {
+  transform: scale(0.9);
+}
+
+.drawer__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Drawer Divider */
+.drawer__divider {
+  height: 1px;
+  background-color: var(--divider);
+  margin: 0 var(--space-lg);
+  flex-shrink: 0;
+}
+
+/* Drawer Body (scrollable products) */
+.drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: var(--space-md) 0 var(--space-2xl);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PRODUCT ITEMS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.product-list {
+  list-style: none;
+}
+
+.product-item {
+  display: block;
+}
+
+.product-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--duration-fast) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-link:hover {
+  background-color: var(--bg-hover);
+  opacity: 1;
+}
+
+.product-link:active {
+  background-color: rgba(74, 50, 37, 0.05);
+}
+
+/* Product Image */
+.product__image-wrap {
+  width: 72px;
+  height: 90px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+.product__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.product-link:hover .product__image {
+  transform: scale(1.05);
+}
+
+/* Product Info */
+.product__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2xs);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.product__category-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 8px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.product__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2xs);
+  line-height: var(--lh-tight);
+}
+
+.product__brand {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+
+.product__price {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* Product Arrow */
+.product__arrow {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              color var(--duration-fast) ease;
+}
+
+.product-link:hover .product__arrow {
+  transform: translateX(3px);
+  color: var(--text-primary);
+}
+
+/* Product Separator */
+.product-item + .product-item {
+  border-top: 1px solid var(--divider);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SHOP ALL BUTTON (Bottom of drawer)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.drawer__shop-all {
+  display: block;
+  width: calc(100% - var(--space-lg) * 2);
+  margin: var(--space-md) auto 0;
+  padding: var(--space-md) var(--space-lg);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-widest);
+  color: var(--text-inverse);
+  text-transform: uppercase;
+  text-align: center;
+  background-color: var(--text-primary);
+  border: none;
+  transition: opacity var(--duration-fast) ease,
+              transform var(--duration-fast) ease;
+}
+
+.drawer__shop-all:hover {
+  opacity: 0.85;
+}
+
+.drawer__shop-all:active {
+  transform: scale(0.98);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE ADJUSTMENTS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (min-width: 768px) {
+  .drawer-panel {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    width: 480px;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    transform: translateX(100%);
+  }
+
+  .drawer-panel.active {
+    animation: drawerSlideLeft var(--duration-drawer) var(--ease-out-spring) forwards;
+  }
+
+  .drawer__handle {
+    display: none; /* Hide bottom-sheet drag handle on desktop side drawer */
+  }
+
+  .product__image-wrap {
+    width: 80px;
+    height: 100px;
+  }
+
+  .product-link {
+    gap: var(--space-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .drawer-panel {
+    width: 520px;
+  }
+
+  .product__image-wrap {
+    width: 88px;
+    height: 110px;
+  }
+}
