@@ -11,7 +11,7 @@ const FRENZO_LOOKBOOK = {
       id: "look-001",
       title: "THE LINEN EDIT",
       subtitle: "Relaxed Tailoring",
-      category: "Men's",
+      season: "AW25",
       image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&h=1067&fit=crop&q=80",
       alt: "Model wearing beige linen blazer with cream wide-leg trousers",
       products: [
